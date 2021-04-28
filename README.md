@@ -1,1 +1,1 @@
-Microfront architecture using single-spa and Module federation
+Microfrontend architecture using single-spa and Module federation
