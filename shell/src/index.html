@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Federation</title>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "shell": "http://localhost:8080/remoteEntry.js"
+        }
+      }
+    </script>
+    <!-- <script type="systemjs-importmap">
+      {
+        "imports": {
+          "nav": "http://localhost:8081/remoteEntry.js",
+          "home": "http://localhost:8082/remoteEntry.js",
+          "contact": "http://localhost:8083/remoteEntry.js"
+        }
+      }
+    </script> -->
+    <script>
+      if (typeof Promise === 'undefined') {
+        document.write(
+          '<script src="https://unpkg.com/bluebird@3.7.2/js/browser/bluebird.core.min.js"><\/script>'
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.3.1/dist/import-map-overrides.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/dynamic-import-maps.min.js"
+    ></script>
+    <!-- <template id="single-spa-layout">
+      <single-spa-router>
+        <route path="/">
+          <application name="nav/Header" loader="header" error="header"></application>
+        </route>
+        <route path="home">
+          <application name="home/Home"" error="home"></application>
+        </route>
+        <route path="contact">
+          <application name="contact/Contact"></application>
+        </route>
+        <route path="/">
+          <application name="nav/Footer" error="header"></application>
+        </route>
+        <route default>
+          Not found
+        </route>
+      </single-spa-router>
+    </template> -->
+  </head>
+  <body>
+    <div id="ac-splash"></div>
+    <div id="ac-header"></div>
+    <div id="ac-page-content"></div>
+    <div id="ac-not-found"></div>
+    <div id="ac-page-error"></div>
+    <div id="ac-footer"></div>
+    <!-- <script src="http://localhost:8081/remoteEntry.js"></script>
+    <script src="http://localhost:8082/remoteEntry.js"></script>
+    <script src="http://localhost:8083/remoteEntry.js"></script> -->
+    <!-- <script type="systemjs-module" src="import:nav"></script>
+    <script type="systemjs-module" src="import:home"></script>
+    <script type="systemjs-module" src="import:contact"></script> -->
+    <!-- <script>
+      System.import('shell').then(function (container) {
+        container.get('Shell').then(function (module) {
+          module();
+        });
+      });
+    </script> -->
+  </body>
+</html>

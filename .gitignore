@@ -1,0 +1,10 @@
+shell/node_modules
+shell/dist
+nav/node_modules
+nav/dist
+home/node_modules
+home/dist
+contact/node_modules
+contact/dist
+fragment/node_modules
+fragment/dist
