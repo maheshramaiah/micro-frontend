@@ -1,6 +1,41 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const {
+  ModuleFederationConfigBuilder,
+} = require('@amzn/zaphod-module-federation-build-tool');
 const deps = require('./package.json').dependencies;
+
+const projectRoot = path.join(__dirname, './');
+const moduleFederationConfigBuilder = new ModuleFederationConfigBuilder(
+  projectRoot,
+  {
+    name: 'contact',
+    exposes: {
+      Contact: {
+        import: './src/Root.js',
+        name: 'Contact',
+      },
+    },
+  }
+);
+const moduleFederationConfig = moduleFederationConfigBuilder
+  .shareConsumedSingletonDependency(['single-spa-react'])
+  .shareDependency([
+    {
+      packageName: 'react',
+      import: 'react',
+      shareKey: 'react',
+      shareScope: 'newReact',
+    },
+    {
+      packageName: 'react-dom',
+      import: 'react-dom',
+      shareKey: 'react-dom',
+      shareScope: 'newReact',
+    },
+  ])
+  .buildConfig();
 
 module.exports = {
   mode: 'development',
@@ -42,34 +77,35 @@ module.exports = {
   },
 
   plugins: [
-    new ModuleFederationPlugin({
-      name: 'contact',
-      library: {
-        type: 'system',
-        // name: 'contact',
-      },
-      filename: 'remoteEntry.js',
-      exposes: {
-        Contact: {
-          import: './src/Root.js',
-          name: 'Contact',
-        },
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: deps['react'],
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-        'single-spa-react': {
-          singleton: true,
-          requiredVersion: deps['single-spa-react'],
-        },
-      },
-    }),
+    new ModuleFederationPlugin(moduleFederationConfig),
+    // new ModuleFederationPlugin({
+    //   name: 'contact',
+    //   library: {
+    //     type: 'system',
+    //     // name: 'contact',
+    //   },
+    //   filename: 'remoteEntry.js',
+    //   exposes: {
+    //     Contact: {
+    //       import: './src/Root.js',
+    //       name: 'Contact',
+    //     },
+    //   },
+    //   shared: {
+    //     react: {
+    //       singleton: true,
+    //       requiredVersion: deps['react'],
+    //     },
+    //     'react-dom': {
+    //       singleton: true,
+    //       requiredVersion: deps['react-dom'],
+    //     },
+    //     'single-spa-react': {
+    //       singleton: true,
+    //       requiredVersion: deps['single-spa-react'],
+    //     },
+    //   },
+    // }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
     }),

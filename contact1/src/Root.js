@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import singleSpaReact from 'single-spa-react';
 
 function Root() {
-  return <section>Contact us component</section>;
+  return <section>Contact us component override</section>;
 }
 
 const lifecycles = singleSpaReact({

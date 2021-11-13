@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as uselessLib from 'useless-lib';
+import { Helmet } from 'react-helmet';
+import BodyClassName from 'react-body-classname';
 import {
   loadRemoteEntries,
   loadRemoteModule,
@@ -50,14 +52,21 @@ export default function Home1() {
 
   return (
     <React.Suspense fallback={null}>
-      <Content>Home1</Content>
-      <p>Useless lib - {uselessLib.version}</p>
-      <Link to="/home2">Go to Home2</Link>
-      {remoteModulesLoaded
-        ? remotes.map((remote) => (
-            <LoadModule key={remote.remoteName} {...remote} />
-          ))
-        : null}
+      <BodyClassName className="home-wrapper">
+        <>
+          <Helmet>
+            <title>Home</title>
+          </Helmet>
+          <Content>Home1</Content>
+          <p>Useless lib - {uselessLib.version}</p>
+          <Link to="/home2">Go to Home2</Link>
+          {remoteModulesLoaded
+            ? remotes.map((remote) => (
+                <LoadModule key={remote.remoteName} {...remote} />
+              ))
+            : null}
+        </>
+      </BodyClassName>
     </React.Suspense>
   );
 }

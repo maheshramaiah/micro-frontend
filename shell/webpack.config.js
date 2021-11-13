@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
@@ -9,7 +10,8 @@ module.exports = {
   },
   devtool: 'source-map',
   output: {
-    publicPath: 'http://localhost:8080/',
+    path: path.join(__dirname, 'dist/shell'),
+    publicPath: 'http://localhost:8080/dist/shell/',
     // libraryTarget: 'system',
     // filename: '[name].[contenthash:8].js',
     // chunkFilename: '[name].[contenthash:8].chunk.js',
@@ -22,6 +24,7 @@ module.exports = {
   devServer: {
     port: 8080,
     historyApiFallback: true,
+    contentBase: 'http://localhost:8080/dist/shell/',
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
@@ -44,46 +47,46 @@ module.exports = {
   },
 
   plugins: [
-    // new ModuleFederationPlugin({
-    //   name: 'shell',
-    //   library: {
-    //     type: 'system',
-    //     // name: 'shell'
-    //   },
-    //   filename: 'remoteEntry.js',
-    //   exposes: {
-    //     Shell: {
-    //       import: './src/index.js',
-    //       name: 'Shell',
-    //     },
-    //   },
-    //   // remotes: {
-    //   //   nav: 'nav',
-    //   //   home: 'home',
-    //   //   contact: 'contact'
-    //   // }
-    //   shared: {
-    //     react: {
-    //       singleton: true,
-    //       requiredVersion: deps['react'],
-    //     },
-    //     'react-dom': {
-    //       singleton: true,
-    //       requiredVersion: deps['react-dom'],
-    //     },
-    //     'single-spa-react': {
-    //       singleton: true,
-    //       requiredVersion: deps['single-spa-react'],
-    //     },
-    //     'styled-components': {
-    //       singleton: true,
-    //       requiredVersion: deps['styled-components'],
-    //     },
-    //   },
-    // }),
+    new ModuleFederationPlugin({
+      name: 'shell',
+      library: {
+        type: 'system',
+        // name: 'shell'
+      },
+      filename: 'remoteEntry.js',
+      exposes: {
+        Shell: {
+          import: './src/index.js',
+          name: 'Shell',
+        },
+      },
+      // remotes: {
+      //   nav: 'nav',
+      //   home: 'home',
+      //   contact: 'contact'
+      // }
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: deps['react'],
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: deps['react-dom'],
+        },
+        'single-spa-react': {
+          singleton: true,
+          requiredVersion: deps['single-spa-react'],
+        },
+        'styled-components': {
+          singleton: true,
+          requiredVersion: deps['styled-components'],
+        },
+      },
+    }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
-      inject: true,
+      inject: false,
     }),
   ],
 };

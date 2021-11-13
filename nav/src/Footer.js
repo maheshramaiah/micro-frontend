@@ -37,8 +37,7 @@ const lifecycles = singleSpaReact({
     return null;
   },
   domElementGetter(props) {
-    // console.log(props);
-    return document.getElementById('ac-footer');
+    return document.getElementById(props.domElementId);
   },
 });
 

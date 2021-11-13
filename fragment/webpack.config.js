@@ -1,5 +1,26 @@
+const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const {
+  ModuleFederationConfigBuilder,
+} = require('@amzn/zaphod-module-federation-build-tool');
+
+const projectRoot = path.join(__dirname, './');
+const moduleFederationConfigBuilder = new ModuleFederationConfigBuilder(
+  projectRoot,
+  {
+    name: 'fragment',
+    exposes: {
+      Button: {
+        import: './src/Button.js',
+        name: 'Button',
+      },
+    },
+  }
+);
+const moduleFederationConfig = moduleFederationConfigBuilder
+  .shareConsumedSingletonDependency(['react', 'react-dom'])
+  .buildConfig();
 
 module.exports = {
   mode: 'development',
@@ -19,6 +40,9 @@ module.exports = {
 
   devServer: {
     port: 8084,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
 
   module: {
@@ -38,27 +62,28 @@ module.exports = {
   },
 
   plugins: [
-    new ModuleFederationPlugin({
-      name: 'fragment',
-      library: {
-        type: 'system',
-      },
-      filename: 'remoteEntry.js',
-      exposes: {
-        Button: {
-          import: './src/Button.js',
-          name: 'Button',
-        },
-      },
-      shared: {
-        react: {
-          singleton: true,
-        },
-        'react-dom': {
-          singleton: true,
-        },
-      },
-    }),
+    new ModuleFederationPlugin(moduleFederationConfig),
+    // new ModuleFederationPlugin({
+    //   name: 'fragment',
+    //   library: {
+    //     type: 'system',
+    //   },
+    //   filename: 'remoteEntry.js',
+    //   exposes: {
+    //     Button: {
+    //       import: './src/Button.js',
+    //       name: 'Button',
+    //     },
+    //   },
+    //   shared: {
+    //     react: {
+    //       singleton: true,
+    //     },
+    //     'react-dom': {
+    //       singleton: true,
+    //     },
+    //   },
+    // }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
     }),

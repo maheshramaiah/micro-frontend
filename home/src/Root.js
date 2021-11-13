@@ -32,8 +32,7 @@ const lifecycles = singleSpaReact({
     return null;
   },
   domElementGetter(props) {
-    // console.log(props);
-    return document.getElementById('ac-page-content');
+    return document.getElementById(props.domElementId);
   },
 });
 

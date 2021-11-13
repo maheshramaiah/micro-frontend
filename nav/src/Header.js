@@ -45,12 +45,14 @@ const lifecycles = singleSpaReact({
   ReactDOM,
   rootComponent: Header,
   errorBoundary(err, info, props) {
+    console.log(err);
+    console.log(info);
+    console.log(props);
     // Customize the root error boundary for your microfrontend here.
     return <div>Error in header</div>;
   },
   domElementGetter(props) {
-    // console.log(props);
-    return document.getElementById('ac-header');
+    return document.getElementById(props.domElementId);
   },
 });
 

@@ -7,7 +7,7 @@
     <script type="systemjs-importmap">
       {
         "imports": {
-          "shell": "http://localhost:8080/remoteEntry.js"
+          "shell": "http://localhost:8080/dist/shell/remoteEntry.js"
         }
       }
     </script>
@@ -72,12 +72,12 @@
     <!-- <script type="systemjs-module" src="import:nav"></script>
     <script type="systemjs-module" src="import:home"></script>
     <script type="systemjs-module" src="import:contact"></script> -->
-    <!-- <script>
+    <script>
       System.import('shell').then(function (container) {
         container.get('Shell').then(function (module) {
           module();
         });
       });
-    </script> -->
+    </script>
   </body>
 </html>

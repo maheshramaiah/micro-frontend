@@ -1,11 +1,11 @@
 {
-  "name": "spa-nav",
+  "name": "spa-contact",
   "version": "1.0.0",
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "build:start": "cd dist && PORT=8081 npx serve",
+    "build:start": "cd dist && PORT=8083 npx serve",
     "start": "webpack-cli serve"
   },
   "license": "MIT",
@@ -26,12 +26,10 @@
   "dependencies": {
     "@babel/runtime": "^7.14.0",
     "core-js": "^3.12.1",
-    "react": "16.14.0",
-    "react-dom": "16.14.0",
-    "react-helmet": "^6.1.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
     "single-spa-react": "^4.1.1",
-    "styled-components": "^5.2.1",
-    "useless-lib": "^2.0.1"
+    "styled-components": "^5.2.1"
   }
 }

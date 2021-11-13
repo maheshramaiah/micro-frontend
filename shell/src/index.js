@@ -36,6 +36,11 @@ const remotes = [
   },
 ];
 
+const domPlacement = {
+  Header: 'ac-header',
+  Footer: 'ac-footer',
+};
+
 loadRemoteEntries(remotes)
   .then(() => {
     remotes.forEach((remote) => {
@@ -48,12 +53,16 @@ loadRemoteEntries(remotes)
               location.pathname.startsWith(path)
             );
           },
+          customProps: {
+            domElementId: domPlacement[exposedModule] || 'ac-page-content',
+          },
         });
       });
     });
   })
   .catch((err) => {
-    throw new Error(err);
+    console.log('Step1', err);
+    parcels.error.mount();
   });
 
 // registerApplication({
@@ -76,6 +85,10 @@ loadRemoteEntries(remotes)
 //   app: () => import('contact'),
 //   activeWhen: ['/contact'],
 // });
+
+start({
+  urlRerouteOnly: true,
+});
 
 function initParcel(config, domElement) {
   let parcel;
@@ -151,8 +164,4 @@ window.addEventListener('single-spa:app-change', (event) => {
     parcels.notFound.mount();
   }
   parcels.loader.unmount();
-});
-
-start({
-  urlRerouteOnly: true,
 });

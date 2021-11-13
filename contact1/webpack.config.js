@@ -10,27 +10,17 @@ const projectRoot = path.join(__dirname, './');
 const moduleFederationConfigBuilder = new ModuleFederationConfigBuilder(
   projectRoot,
   {
-    name: 'nav',
+    name: 'contact',
     exposes: {
-      Header: {
-        import: './src/Header.js',
-        name: 'Header',
-      },
-      Footer: {
-        import: './src/Footer.js',
-        name: 'Footer',
+      Contact: {
+        import: './src/Root.js',
+        name: 'Contact',
       },
     },
   }
 );
 const moduleFederationConfig = moduleFederationConfigBuilder
-  .shareConsumedSingletonDependency([
-    'react',
-    'react-dom',
-    'single-spa-react',
-    'styled-components',
-  ])
-  .shareDependency(['useless-lib'])
+  .shareConsumedSingletonDependency(['react', 'react-dom', 'single-spa-react'])
   .buildConfig();
 
 module.exports = {
@@ -39,7 +29,7 @@ module.exports = {
     index: './src/index.js',
   },
   output: {
-    publicPath: 'http://localhost:8081/',
+    publicPath: 'http://localhost:8086/',
     // libraryTarget: 'system',
     filename: '[name].[contenthash:8].js',
     chunkFilename: '[name].[contenthash:8].chunk.js',
@@ -50,7 +40,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 8081,
+    port: 8086,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
@@ -75,20 +65,16 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin(moduleFederationConfig),
     // new ModuleFederationPlugin({
-    //   name: 'nav',
+    //   name: 'contact',
     //   library: {
     //     type: 'system',
-    //     // name: 'nav',
+    //     // name: 'contact',
     //   },
     //   filename: 'remoteEntry.js',
     //   exposes: {
-    //     Header: {
-    //       import: './src/Header.js',
-    //       name: 'Header',
-    //     },
-    //     Footer: {
-    //       import: './src/Footer.js',
-    //       name: 'Footer',
+    //     Contact: {
+    //       import: './src/Root.js',
+    //       name: 'Contact',
     //     },
     //   },
     //   shared: {
@@ -104,11 +90,6 @@ module.exports = {
     //       singleton: true,
     //       requiredVersion: deps['single-spa-react'],
     //     },
-    //     'styled-components': {
-    //       singleton: true,
-    //       requiredVersion: deps['styled-components'],
-    //     },
-    //     'useless-lib': {},
     //   },
     // }),
     new HtmlWebPackPlugin({
